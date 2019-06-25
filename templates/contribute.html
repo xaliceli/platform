@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  <div class="container">
+    <div class="row my-5">
+      <div class="col">
+        <h2>Contribute to Curlicue</h2>
+        <p>Thank you for contributing to Curlicue! We are a mission-driven start-up working to expand access to knowledge about educational and career pathways. Your contribution will help others benefit and learn from your experiences. A few  notes:</p>
+        <ul class="mb-5">
+          <li><span class="text-primary">Background:</span> We ask contributors to share some demographic information and relevant positions you’ve held or schools you’ve attended. This is to help readers find posts from people like them (especially for underrepresented groups) and better understand your experiences in context.
+            <ul>
+              <li>All demographic information is optional. </li>
+              <li>We ask for at least one relevant role or affiliation, which you can anonymize. For example, you can choose to be listed as “Data Scientist, Non-Profit Organization” rather than displaying your employer’s actual name. </li>
+            </ul>
+          </li>
+          <li><span class="text-primary">Style & Tone:</span> Imagine speaking to yourself five years ago or a junior colleague you mentor. Share what your experience was like and what was most helpful for you personally; don’t worry about crafting general guidelines applicable to everyone. We've included a few sample responses below.</li>
+          <li><span class="text-primary">Compensation:</span> At this time, contributions are on a volunteer basis. We hope to one day provide some form of honorarium, including to those who joined as volunteers. This is a long-term goal and we will keep contributors updated as the platform grows and evolves. </li>
+        </ul>
+        <hr>
+        <form class="my-5">
+          <div class="form-group">
+            <label for="name">Display Name</label>
+            <input type="text" class="form-control" id="name" placeholder="Name you'd like to displayed. Feel free to use just your first name, a last initial only, or a pseudonym.">
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" class="form-control" id="email" placeholder="name@example.com">
+          </div>
+          <div class="form-group">
+            <label for="demographics">Please select any of the following that describes you. This is to help readers find posts from others with similar backgrounds, experiences, or identities.</label>
+            <select multiple class="form-control" id="demographics">
+              <option>Man</option>
+              <option>Woman</option>
+              <option>Non-Binary</option>
+              <option>Transgender</option>
+              <option>LGBTQIA+</option>
+              <option>Asian</option>
+              <option>Black</option>
+              <option>Latinx</option>
+              <option>Middle Eastern</option>
+              <option>Native</option>
+              <option>Pacific Islander</option>
+              <option>White</option>
+              <option>First-Generation College Student</option>
+              <option>International Student</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="roles">Please list a few roles you’ve held relevant to what you’re sharing today. This is to provide readers context on your background. If you select the “Anonymous” option below, we will automatically convert your affiliated institutions into generic descriptors. </label>
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <input type="email" class="form-control" id="inputEmail4" placeholder="Title">
+              </div>
+              <div class="form-group col-md-8">
+                <input type="password" class="form-control" id="inputPassword4" placeholder="Organization / School">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <input type="email" class="form-control" id="inputEmail4" placeholder="Title">
+              </div>
+              <div class="form-group col-md-8">
+                <input type="password" class="form-control" id="inputPassword4" placeholder="Organization / School">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <input type="email" class="form-control" id="inputEmail4" placeholder="Title">
+              </div>
+              <div class="form-group col-md-8">
+                <input type="password" class="form-control" id="inputPassword4" placeholder="Organization / School">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="exampleFormControlTextarea1">Please share a little about what you’ve done in this field. This doesn’t have to be long or formal and helps provide readers additional context.</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="4"
+            placeholder="I have been working as a cat wrangler for three years, most recently as a Senior Cat Wrangling Engineer at Kedi & Associates. I entered the cat wrangling field as a Cat Wrangling Intern at Garfield Co. I am most proud of my accomplishments implementing a catnap service that improved customer satisfaction by 50%."></textarea>
+          </div>
+          <div class="form-group">
+            <label for="exampleFormControlTextarea1">How did you become interested in [autocomplete based on earlier submissions]? </label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="4"
+            placeholder="I grew up on a farm with twelve cats and have always been interested in improving the experience of felines. In college I majored in Cat Studies and became very interested in Cat Wrangling specifically due to its combination of quantitative rigor and creative, out-of-the-box thinking. I loved my internship at Garfield Co. and took a full-time offer there at the end of my internship summer."></textarea>
+          </div>
+          <div class="form-group">
+            <label for="exampleFormControlTextarea1">How did you feel when you were starting off? What challenges did you encounter, and how did you navigate these challenges?</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="6"
+            placeholder="I was excited but really, really nervous. Cat Wrangling is a competitive field and I didn't go to one of the famous target schools. The first month of my internship was really stressful because there were a lot of technologies that I'd never been exposed to. All of the other interns seemed so familiar with all of these complicated tools like HairBall and Treetz. To be honest I worried for a while that I wasn't cut out for Cat Wrangling at all. The turning point was when I confided in my mentor at work about how I felt. They told me that I wasn't expected to know everything right away, that they also felt like I did when they were an intern, and that I was doing a good job learning and observing. We set realistic goals for my summer together, and I actually made suggestions for how future interns could be better trained and onboarded that Garfield Co. is still using today."></textarea>
+          </div>
+          <div class="form-group">
+            <label for="exampleFormControlTextarea1">How has your experience in this field changed over time? This might involve interests, feelings about the field, long-term goals, or something else.</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="6"
+            placeholder="Junior cat wranglers tend to be generalists while senior cat wranglers tend to specialize. I had initially thought that I was much better suited for the project management side of cat wrangling. It turns out that, while management felt glamorous to me in college, I found all of the frequent meetings surprisingly draining and relished the moments where I could sit down and think at my own pace. I'd shied away from the quantitative work at first and never thought of myself as good at math because so many students in undergrad seemed much more knowledgeable, but came to discover that I quite enjoyed it and was good at applying mathematical models to cat behavior. These days I spend most of my time building advanced cat motion models, which I would've never expected but find so fulfilling!"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="exampleFormControlTextarea1">What were some of the strategies and/or resources you found most helpful along the way? These can either be concrete things (e.g. X Scholarship, Y Internship) or general things (e.g. “form relationships with professors”, "seek mentorship opportunities").</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="6"
+            placeholder="The National Association of Cat Wranglers sponsors a number of scholarships to their annual conference for undergrads interested in the field, including specific funds dedicated to supporting underrepresented minorities. The scholarship pays all travel, lodging, and conference expenses and offers tremendous opportunities to meet one-on-one with leaders in the field. Candidates aren't expected to have prior experience in cat wrangling unlike a lot of other internships and opportunities, so this was huge for me. I did not see myself as an amazing student or rising star, especially since I barely knew anything about cat wrangling at the time. I felt really fortunate to have received the scholarship and probably wouldn't have landed my first internship otherwise."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-rounded ml-0">Preview Submission</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  <div class="container">
+    <div class="row my-5">
+      <div class="col-6">
+        <h1 class="font-weight-bold">Welcome to Curlicue.</h1>
+        <p class="font-weight-light home-intro">Curlicue is a community where established students and professionals share their own experiences of getting started, navigating challenges, and achieving their goals.</p>
+        <p class="font-weight-light home-intro">Whether you're hoping to make the most of college or seeking your dream career, Curlicue helps you find and learn from others who’ve succeeded in similar journeys.</p>
+        <button type="button" class="btn btn-primary btn-rounded ml-0" onclick="window.location.href='/about/'">Learn More</button>
+      </div>
+      <div class="col-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Transition to College</h5>
+            <a class="badge category" href="/content/">Adjusting to Campus</a>
+            <a class="badge category" href="/content/">Making Friends</a>
+            <a class="badge category" href="/content/">Joining Extracurriculars</a>
+            <a class="badge category" href="/content/">Relationships with Professors</a>
+            <a class="badge category" href="/content/">Choosing a Major</a>
+            <a class="badge category" href="/content/">Working</a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Pursuing Graduate Studies</h5>
+            <a class="badge category" href="/content/">Masters</a>
+            <a class="badge category" href="/content/">PhD</a>
+            <a class="badge category" href="/content/">Law School</a>
+            <a class="badge category" href="/content/">Business School</a>
+            <a class="badge category" href="/content/">Medical School</a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Navigating Careers</h5>
+            <a class="badge category" href="/content/">Business</a>
+            <a class="badge category" href="/content/">Data</a>
+            <a class="badge category" href="/content/">Engineering</a>
+            <a class="badge category" href="/content/">Entrepreneurship</a>
+            <a class="badge category" href="/content/">Finance</a>
+            <a class="badge category" href="/content/">Journalism</a>
+            <a class="badge category" href="/content/">Non-Profit</a>
+            <a class="badge category" href="/content/">Product</a>
+            <a class="badge category" href="/content/">Research</a>
+            <a class="badge category" href="/content/">Software/Tech</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

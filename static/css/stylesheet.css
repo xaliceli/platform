@@ -1,0 +1,47 @@
+.home-intro {
+	font-size: 1.5rem;
+}
+
+.btn-rounded {
+	border-radius: .5rem;
+}
+
+.sort, .sort:hover, .sort:active, .sort:focus, .sort:focus-within {
+	font-size: 16px;
+	background: #fff;
+	color: #007bff;
+	box-shadow: none !important;
+	margin: 0;
+	padding: 0;
+}
+
+h1, h2, h3 {
+	color: #007bff;
+}
+
+.category {
+	font-weight: normal;
+	background: #007bff;
+	border-radius: .75rem;
+	padding: .5rem;
+	margin-top: .25rem;
+	margin-bottom: .25rem;
+	box-shadow: none;
+}
+
+.category i {
+	margin-left: .25rem;
+	font-size: 100%;
+	color: #fff;
+}
+
+.category i:hover {
+	color: #fff;
+	opacity: 1;
+}
+
+a.rating {
+	color: #007bff !important;
+	font-weight: bold;
+	font-size: 75%;
+}
