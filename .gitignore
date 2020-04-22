@@ -1,3 +1,7 @@
 */.DS_Store
-.DS_Store
 *.DS_Store
+.Idea/*
+cloud_sql_proxy
+auth.json
+config.py
+*.pyc

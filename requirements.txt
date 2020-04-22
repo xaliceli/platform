@@ -1,0 +1,15 @@
+flask==1.0.3
+flask_sqlalchemy
+flask_migrate
+flask_dance
+flask_login
+flask_bcrypt
+flask_wtf
+sqlalchemy
+sqlalchemy_utils
+wtforms
+titlecase
+blinker
+psycopg2
+pg8000
+google-cloud-language

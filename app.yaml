@@ -1,1 +1,4 @@
 runtime: python37
+
+beta_settings:
+  cloud_sql_instances: 'platform-244818:us-central1:db'

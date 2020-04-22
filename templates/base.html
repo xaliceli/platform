@@ -1,6 +1,8 @@
+{% import 'macros.html' as macros %}
+
 <!doctype html>
 <html lang="en">
-  <head>
+<head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -20,58 +22,76 @@
     <!-- Custom CSS -->
     <link type="text/css" rel="stylesheet" href="/static/css/stylesheet.css">
 
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+
     <title>Curlicue: an Experience Sharing Platform</title>
-  </head>
-  <body>
-    <header class="container">
-      <div class="row my-3">
-        <div id="title" class="col-3">
-          <h2><a href="/">Curlicue</a></h2>
+</head>
+<body>
+<header class="container">
+    <div class="row my-3">
+        <div id="title" class="col-sm">
+            <h2><a href="/">Curlicue</a></h2>
         </div>
-        <div id="search" class="col-6">
-          <!-- Search form -->
-          <form class="form-inline md-form form-sm mt-0">
-            <i class="fas fa-search" aria-hidden="true"></i>
-            <input class="form-control ml-3 w-75" type="text" placeholder="I am interested in..."
-              aria-label="Search">
-          </form>
+        <div id="search" class="col-md">
+            <!-- Search form -->
+            <datalist id="search_list">
+                {% for category, tags in categories.items() %}
+                    <option value="{{ category }}">
+                        {% for tag in tags %}
+                            <option value="   {{ tag }}">
+                        {% endfor %}
+                {% endfor %}
+            </datalist>
+            <form class="form-inline md-form form-sm mt-0">
+                <i class="fas fa-search" aria-hidden="true"></i>
+                <input class="form-control ml-3 w-75" type="text" placeholder="I am interested in..."
+                       aria-label="Search" list="search_list"
+                       onchange="javascript:location.href = '/content/?all=' +
+                       this.value.toLowerCase().replace('   ', '').replace(/ /g, '+');">
+            </form>
         </div>
-        <div id="menu" class="col-3">
-          <ul class="nav justify-content-end">
-            <li class="nav-item">
-              <a class="nav-link" href="/about/">About</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/contribute/">Contribute</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/register/">Join</a>
-            </li>
-          </ul>
+        <div id="menu" class="col-sm">
+            <ul class="nav justify-content-end">
+                <li class="nav-item">
+                    <a class="nav-link" href="/about/">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/contribute/">Contribute</a>
+                </li>
+                <li class="nav-item">
+                    {% if current_user.is_authenticated %}
+                        <a class="nav-link" href="{{ url_for("auth.logout") }}">Log Out</a>
+                    {% else %}
+                        <a class="nav-link" href="{{ url_for("auth.login") }}">Log In</a>
+                    {% endif %}
+                </li>
+            </ul>
         </div>
-      </div>
-    </header>
-    <main id="content">
+    </div>
+</header>
+<main id="content">
+    {{ macros.messages() }}
     {% block content %}
     {% endblock %}
-    </main>
-    <footer class="page-footer font-small elegant-color-dark">
+</main>
+<footer class="page-footer font-small elegant-color-dark">
 
-      <!-- Copyright -->
-      <div class="footer-copyright text-center py-3">Curlicue 2019. All rights reserved.
-      </div>
-      <!-- Copyright -->
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3">Curlicue 2019. All rights reserved.
+    </div>
+    <!-- Copyright -->
 
-    </footer>
-    <!-- Footer -->
+</footer>
+<!-- Footer -->
 
-    <!-- JQuery -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <!-- Bootstrap tooltips -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
-    <!-- Bootstrap core JavaScript -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <!-- MDB core JavaScript -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.2/js/mdb.min.js"></script>
-  </body>
+<!-- JQuery -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.2/js/mdb.min.js"></script>
+</body>
 </html>

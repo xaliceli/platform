@@ -2,138 +2,184 @@
 
 {% block content %}
 
-  <div class="container">
-    <div class="row">
-      <div class="col">
-        <span class="text-primary">Category</span><br>
-        Transition to College
-      </div>
-      <div class="col">
-        <span class="text-primary">Subject Tags</span><br>
-        <a class="badge category">Adjusting to Campus <i class="close fas fa-times"></i></a>
-      </div>
-      <div class="col">
-        <span class="text-primary">Author Tags</span><br>
-        <a class="badge category">Woman <i class="close fas fa-times"></i></a>
-        <a class="badge category">First-Generation College Student <i class="close fas fa-times"></i></a>
-      </div>
-      <div class="col-2">
-        <button class="btn sort" type="button" data-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false">Sort By <i class="fas fa-chevron-down"></i></button>
-
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href="#">Aggregate Score</a>
-          <a class="dropdown-item" href="#">Date - Recent</a>
-          <a class="dropdown-item" href="#">Date - Oldest</a>
-          <a class="dropdown-item" href="#">Most Encouraging</a>
-          <a class="dropdown-item" href="#">Most Eye-Opening</a>
-          <a class="dropdown-item" href="#">Most Helpful</a>
-          <a class="dropdown-item" href="#">Most Motivating</a>
-          <a class="dropdown-item" href="#">Most Reassuring</a>
+    <div class="container">
+        <div class="row">
+            <div class="col-md">
+                <span class="text-primary">Category</span><br>
+                {{ active_category }}<br><br>
+                <a href="/summary/?{{ format_url({
+                    'c': [active_category],
+                    'ct': active_ctags
+                    }) }}">See Summary
+                </a>
+            </div>
+            <div class="col-md">
+                <span class="text-primary">Subject Tags</span><br>
+                {% for ctag in active_ctags %}
+                    <a class="badge category" href="/content/?{{ format_url({
+                    'c': [active_category],
+                    'ct': active_ctags | reject('in', [ctag]),
+                    'dt': active_dtags
+                    }) }}">{{ ctag }} <i class="close fas fa-times"></i></a>
+                {% endfor %}
+            </div>
+            <div class="col-md">
+                <span class="text-primary">Author Tags</span><br>
+                {% for dtag in active_dtags %}
+                    <a class="badge category" href="/content/?{{ format_url({
+                    'c': [active_category],
+                    'ct': active_ctags,
+                    'dt': active_dtags | reject('in', [dtag])
+                    }) }}">{{ dtag }} <i class="close fas fa-times"></i></a>
+                {% endfor %}
+            </div>
+            <div class="col-md-2">
+                <button class="btn sort" type="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">Sort By <i class="fas fa-chevron-down"></i></button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="/content/?{{ format_url({
+                    'c': [active_category],
+                    'ct': active_ctags,
+                    'dt': active_dtags,
+                    'sort': ['overall']
+                    }) }}">Overall Score</a>
+                    <a class="dropdown-item" href="/content/?{{ format_url({
+                    'c': [active_category],
+                    'ct': active_ctags,
+                    'dt': active_dtags,
+                    'sort': ['date_new']
+                    }) }}">Date - Recent</a>
+                    <a class="dropdown-item" href="/content/?{{ format_url({
+                    'c': [active_category],
+                    'ct': active_ctags,
+                    'dt': active_dtags,
+                    'sort': ['date_old']
+                    }) }}">Date - Oldest</a>
+                    <a class="dropdown-item" href="/content/?{{ format_url({
+                    'c': [active_category],
+                    'ct': active_ctags,
+                    'dt': active_dtags,
+                    'sort': ['like']
+                    }) }}">Most Liked</a>
+                    <a class="dropdown-item" href="/content/?{{ format_url({
+                    'c': [active_category],
+                    'ct': active_ctags,
+                    'dt': active_dtags,
+                    'sort': ['encouraging']
+                    }) }}">Most Encouraging</a>
+                    <a class="dropdown-item" href="/content/?{{ format_url({
+                    'c': [active_category],
+                    'ct': active_ctags,
+                    'dt': active_dtags,
+                    'sort': ['eyeopening']
+                    }) }}">Most Eye-Opening</a>
+                    <a class="dropdown-item" href="/content/?{{ format_url({
+                    'c': [active_category],
+                    'ct': active_ctags,
+                    'dt': active_dtags,
+                    'sort': ['helpful']
+                    }) }}">Most Helpful</a>
+                    <a class="dropdown-item" href="/content/?{{ format_url({
+                    'c': [active_category],
+                    'ct': active_ctags,
+                    'dt': active_dtags,
+                    'sort': ['motivating']
+                    }) }}">Most Motivating</a>
+                    <a class="dropdown-item" href="/content/?{{ format_url({
+                    'c': [active_category],
+                    'ct': active_ctags,
+                    'dt': active_dtags,
+                    'sort': ['reassuring']
+                    }) }}">Most Reassuring</a>
+                </div>
+            </div>
         </div>
-      </div>
+        {% if content|length == 0 %}
+            <hr class="my-5">
+            <div class="row my-5">
+                <div class="col">
+                    <p>Sorry, there are no posts that match these filters. Try a different category, or subscribe to
+                    get updates when new, matching posts are added.</p>
+                </div>
+            </div>
+        {% else %}
+            {% for post in content %}
+                <hr class="my-5">
+                <div class="row my-5">
+                    <div class="col-md-2 mr-4">
+                        <p><span class="text-primary">Author</span><br>{{ post.q_name }}</p>
+                        <p><span class="text-primary">Date</span><br>{{ post.time }}</p>
+                        <p><span class="text-primary">Category</span><br> {{ post.category.label }}</p>
+                        <p><span class="text-primary">Subject Tags</span><br>
+                            {% for ctag in post.ctags %}
+                                <a class="badge category" href="/content/?{{ format_url({
+                                'c': [active_category],
+                                'ct': (active_ctags + [ctag.label]) | unique,
+                                'dt': active_dtags
+                                }) }}">{{ ctag.label }}</a>
+                            {% endfor %}
+                        </p>
+                        <p><span class="text-primary">Author Tags</span><br>
+                            {% for dtag in post.author.dtags %}
+                                <a class="badge category" href="/content/?{{ format_url({
+                                'c': [active_category],
+                                'ct': active_ctags,
+                                'dt': (active_dtags + [dtag.label]) | unique
+                                }) }}">{{ dtag.label }}</a>
+                            {% endfor %}
+                        </p>
+                        <p><span class="text-primary">User Reactions</span><br>
+                            <a class="rating" href="{{ url_for('reaction', post_id=post.id, action='like') }}">
+                                <i class="far fa-thumbs-up fa-fw"></i>
+                                Like ({{ post.get_reactions()['Like'] }})</a><br>
+                            <a class="rating" href="{{ url_for('reaction', post_id=post.id, action='dislike') }}">
+                                <i class="far fa-thumbs-down fa-fw"></i>
+                                Dislike ({{ post.get_reactions()['Dislike'] }})</a><br>
+                            <a class="rating" href="{{ url_for('reaction', post_id=post.id, action='encouraging') }}">
+                                <i class="far fa-smile-beam fa-fw"></i>
+                                Encouraging ({{ post.get_reactions()['Encouraging'] }})</a><br>
+                            <a class="rating" href="{{ url_for('reaction', post_id=post.id, action='eye-opening') }}">
+                                <i class="far fa-surprise fa-fw"></i>
+                                Eye-Opening ({{ post.get_reactions()['Eye-Opening'] }})</a><br>
+                            <a class="rating" href="{{ url_for('reaction', post_id=post.id, action='helpful') }}">
+                                <i class="fas fa-hands-helping fa-fw"></i>
+                                Helpful ({{ post.get_reactions()['Helpful'] }})</a><br>
+                            <a class="rating" href="{{ url_for('reaction', post_id=post.id, action='motivating') }}">
+                                <i class="fas fa-mountain fa-fw"></i>
+                                Motivating ({{ post.get_reactions()['Motivating'] }})</a><br>
+                            <a class="rating" href="{{ url_for('reaction', post_id=post.id, action='reassuring') }}">
+                                <i class="far fa-grin fa-fw"></i>
+                                Reassuring ({{ post.get_reactions()['Reassuring'] }})</a><br>
+                    </div>
+                    <div class="col-md ml-4">
+                        <p><span class="text-primary">Relevant Experiences</span>
+                            {% for position in post.positions %}
+                                <br>{{ position.title }}, {{ position.org }}
+                            {% endfor %}
+                        </p>
+                        <p><span class="text-primary">Please share a little about what you’ve done in this field.</span><br>
+                            {{ post.q_about }}
+                        </p>
+                        <p><span class="text-primary">How did you become interested in your field?</span><br>
+                            {{ post.q_interest }}
+                        </p>
+                        <p><span class="text-primary">How did you feel when you were starting off? What challenges did you encounter, and how did you navigate them?</span><br>
+                            {{ post.q_challenges }}
+                        </p>
+                        <p><span
+                                class="text-primary">How has your experience in this field changed over time?</span><br>
+                            {{ post.q_change }}
+                        </p>
+                        <p><span class="text-primary">What were some of the strategies and/or resources you found most helpful along the way?</span><br>
+                            {{ post.q_helpful }}
+                        </p>
+                        <p><span class="text-primary">Is there anything else you'd like to share?</span><br>
+                            {{ post.q_other }}
+                        </p>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
     </div>
-    <hr class="my-5">
-    <div class="row my-5">
-      <div class="col-2 mr-4">
-        <p><span class="text-primary">Author</span><br>Cat</p>
-        <p><span class="text-primary">Date</span><br>June 24, 2019</p>
-        <p><span class="text-primary">Category</span><br>Transition to College</p>
-        <p><span class="text-primary">Subject Tags</span><br>
-          <a class="badge category">Adjusting to Campus</a><br>
-          <a class="badge category">Making Friends</a><br>
-          <a class="badge category">Choosing a Major</a>
-        </p>
-        <p><span class="text-primary">Author Tags</span><br>
-          <a class="badge category">Woman</a><br>
-          <a class="badge category">Asian</a><br>
-          <a class="badge category">First-Generation College Student</a></p>
-        <p><span class="text-primary">User Reactions</span><br>
-          <a class="rating"><i class="far fa-smile-beam fa-fw"></i> Encouraging (4)</a><br>
-          <a class="rating"><i class="far fa-surprise fa-fw"></i> Eye-Opening (1)</a><br>
-          <a class="rating"><i class="fas fa-hands-helping fa-fw"></i> Helpful (2)</a><br>
-          <a class="rating"><i class="fas fa-mountain fa-fw"></i> Motivating (1)</a><br>
-          <a class="rating"><i class="far fa-grin fa-fw"></i> Reassuring (10)</a></p>
-      </div>
-      <div class="col ml-4">
-        <p><span class="text-primary">Relevant Experiences</span><br>
-          Senior Cat Wrangling Engineer, Kedi & Associates<br>
-          Cat Wrangler, Garfield Co<br>
-          Cat Wrangling Intern, Garfield Co
-        </p>
-        <p><span class="text-primary">Please share a little about what you’ve done in this field.</span><br>
-          I have been working as a cat wrangler for three years, most recently as a Senior Cat Wrangling Engineer at Kedi & Associates. I entered the cat wrangling field as a Cat Wrangling Intern at Garfield Co. I am most proud of my accomplishments implementing a catnap service that improved customer satisfaction by 50%.
-        </p>
-        <p><span class="text-primary">How did you become interested in your field?</span><br>
-          I grew up on a farm with twelve cats and have always been interested in improving the experience of felines. In college I majored in Cat Studies and became very interested in Cat Wrangling specifically due to its combination of quantitative rigor and creative, out-of-the-box thinking. I loved my internship at Garfield Co. and took a full-time offer there at the end of my internship summer.
-        </p>
-        <p><span class="text-primary">How did you feel when you were starting off? What challenges did you encounter, and how did you navigate them?</span><br>I was excited but really, really nervous. Cat Wrangling is a competitive field and I didn't go to one of the famous target schools. The first month of my internship was really stressful because there were a lot of technologies that I'd never been exposed to. All of the other interns seemed so familiar with all of these complicated tools like HairBall and Treetz. To be honest I worried for a while that I wasn't cut out for Cat Wrangling at all. The turning point was when I confided in my mentor at work about how I felt. They told me that I wasn't expected to know everything right away, that they also felt like I did when they were an intern, and that I was doing a good job learning and observing. We set realistic goals for my summer together, and I actually made suggestions for how future interns could be better trained and onboarded that Garfield Co. is still using today.
-        </p>
-        <p><span class="text-primary">How has your experience in this field changed over time?</span><br>Junior cat wranglers tend to be generalists while senior cat wranglers tend to specialize. I had initially thought that I was much better suited for the project management side of cat wrangling. It turns out that, while management felt glamorous to me in college, I found all of the frequent meetings surprisingly draining and relished the moments where I could sit down and think at my own pace. I'd shied away from the quantitative work at first and never thought of myself as good at math because so many students in undergrad seemed much more knowledgeable, but came to discover that I quite enjoyed it and was good at applying mathematical models to cat behavior. These days I spend most of my time building advanced cat motion models, which I would've never expected but find so fulfilling!
-        </p>
-        <p><span class="text-primary">What were some of the strategies and/or resources you found most helpful along the way?</span><br>The National Association of Cat Wranglers sponsors a number of scholarships to their annual conference for undergrads interested in the field, including specific funds dedicated to supporting underrepresented minorities. The scholarship pays all travel, lodging, and conference expenses and offers tremendous opportunities to meet one-on-one with leaders in the field. Candidates aren't expected to have prior experience in cat wrangling unlike a lot of other internships and opportunities, so this was huge for me. I did not see myself as an amazing student or rising star, especially since I barely knew anything about cat wrangling at the time. I felt really fortunate to have received the scholarship and probably wouldn't have landed my first internship otherwise.
-        </p>          
-      </div>
-    </div>
-    <hr class="my-5">
-    <div class="row my-5">
-      <div class="col-2 mr-4">
-        <p><span class="text-primary">Author</span><br>Cat</p>
-        <p><span class="text-primary">Date</span><br>June 24, 2019</p>
-        <p><span class="text-primary">Category</span><br>Transition to College</p>
-        <p><span class="text-primary">Subject Tags</span><br>
-          <a class="badge category">Adjusting to Campus</a><br>
-          <a class="badge category">Making Friends</a><br>
-          <a class="badge category">Choosing a Major</a>
-        </p>
-        <p><span class="text-primary">Author Tags</span><br>
-          <a class="badge category">Woman</a><br>
-          <a class="badge category">Asian</a><br>
-          <a class="badge category">First-Generation College Student</a></p>
-        <p><span class="text-primary">User Reactions</span><br>
-          <a class="rating"><i class="far fa-smile-beam fa-fw"></i> Encouraging (4)</a><br>
-          <a class="rating"><i class="far fa-surprise fa-fw"></i> Eye-Opening (1)</a><br>
-          <a class="rating"><i class="fas fa-hands-helping fa-fw"></i> Helpful (2)</a><br>
-          <a class="rating"><i class="fas fa-mountain fa-fw"></i> Motivating (1)</a><br>
-          <a class="rating"><i class="far fa-grin fa-fw"></i> Reassuring (10)</a></p>
-      </div>
-      <div class="col ml-4">
-        <p><span class="text-primary">Relevant Experiences</span><br>
-          Senior Cat Wrangling Engineer, Kedi & Associates<br>
-          Cat Wrangler, Garfield Co<br>
-          Cat Wrangling Intern, Garfield Co
-        </p>
-        <p><span class="text-primary">Please share a little about what you’ve done in this field.</span><br>
-          I have been working as a cat wrangler for three years, most recently as a Senior Cat Wrangling Engineer at Kedi & Associates. I entered the cat wrangling field as a Cat Wrangling Intern at Garfield Co. I am most proud of my accomplishments implementing a catnap service that improved customer satisfaction by 50%.
-        </p>
-        <p><span class="text-primary">How did you become interested in your field?</span><br>
-          I grew up on a farm with twelve cats and have always been interested in improving the experience of felines. In college I majored in Cat Studies and became very interested in Cat Wrangling specifically due to its combination of quantitative rigor and creative, out-of-the-box thinking. I loved my internship at Garfield Co. and took a full-time offer there at the end of my internship summer.
-        </p>
-        <p><span class="text-primary">How did you feel when you were starting off? What challenges did you encounter, and how did you navigate them?</span><br>I was excited but really, really nervous. Cat Wrangling is a competitive field and I didn't go to one of the famous target schools. The first month of my internship was really stressful because there were a lot of technologies that I'd never been exposed to. All of the other interns seemed so familiar with all of these complicated tools like HairBall and Treetz. To be honest I worried for a while that I wasn't cut out for Cat Wrangling at all. The turning point was when I confided in my mentor at work about how I felt. They told me that I wasn't expected to know everything right away, that they also felt like I did when they were an intern, and that I was doing a good job learning and observing. We set realistic goals for my summer together, and I actually made suggestions for how future interns could be better trained and onboarded that Garfield Co. is still using today.
-        </p>
-        <p><span class="text-primary">How has your experience in this field changed over time?</span><br>Junior cat wranglers tend to be generalists while senior cat wranglers tend to specialize. I had initially thought that I was much better suited for the project management side of cat wrangling. It turns out that, while management felt glamorous to me in college, I found all of the frequent meetings surprisingly draining and relished the moments where I could sit down and think at my own pace. I'd shied away from the quantitative work at first and never thought of myself as good at math because so many students in undergrad seemed much more knowledgeable, but came to discover that I quite enjoyed it and was good at applying mathematical models to cat behavior. These days I spend most of my time building advanced cat motion models, which I would've never expected but find so fulfilling!
-        </p>
-        <p><span class="text-primary">What were some of the strategies and/or resources you found most helpful along the way?</span><br>The National Association of Cat Wranglers sponsors a number of scholarships to their annual conference for undergrads interested in the field, including specific funds dedicated to supporting underrepresented minorities. The scholarship pays all travel, lodging, and conference expenses and offers tremendous opportunities to meet one-on-one with leaders in the field. Candidates aren't expected to have prior experience in cat wrangling unlike a lot of other internships and opportunities, so this was huge for me. I did not see myself as an amazing student or rising star, especially since I barely knew anything about cat wrangling at the time. I felt really fortunate to have received the scholarship and probably wouldn't have landed my first internship otherwise.
-        </p>          
-      </div>
-    </div>
-    <nav aria-label="Page navigation example">
-      <ul class="pagination justify-content-center my-5">
-      <li class="page-item">
-        <a class="page-link" href="#" aria-label="Previous">
-          <span aria-hidden="true">&laquo;</span>
-        </a>
-      </li>
-      <li class="page-item"><a class="page-link" href="#">1</a></li>
-      <li class="page-item"><a class="page-link" href="#">2</a></li>
-      <li class="page-item"><a class="page-link" href="#">3</a></li>
-      <li class="page-item">
-        <a class="page-link" href="#" aria-label="Next">
-          <span aria-hidden="true">&raquo;</span>
-        </a>
-      </li>
-    </ul>
-    </nav>
-  </div>
 
 {% endblock %}
